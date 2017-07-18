@@ -3,4 +3,6 @@ export CXXFLAGS='-I${PREFIX}/include -O2 -Wall --pedantic -Wno-comment -Wno-long
 export CPPFLAGS="-I${PREFIX}/include"
 export LDFLAGS="-L${PREFIX}/lib"
 make
-make install
+make install prefix=${PREFIX} exec_prefix=${PREFIX} \
+		libdir=${PREFIX}/lib includedir="${PREFIX}/include/f2c" \
+		LIBDIR=${PREFIX}/lib INCDIR="${PREFIX}/include/f2c"
