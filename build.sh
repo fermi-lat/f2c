@@ -1,5 +1,3 @@
-cd f2c
-sh autogen.sh
-./configure --prefix=${PREFIX}
+cd src
+cp makefile.u Makefile
 make
-make install

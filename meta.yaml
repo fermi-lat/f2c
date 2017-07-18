@@ -3,7 +3,7 @@ package:
    version: "0.0.0"
 
 source:
-   git_url: https://github.com/Areustle/fermi-f2c.git
+  url: http://www.netlib.org/f2c/src.tgz
 
 build:
   number: 0
