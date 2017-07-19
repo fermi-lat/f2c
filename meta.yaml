@@ -7,3 +7,10 @@ source:
 
 build:
   number: 0
+
+requirements:
+   build:
+      - autoconf
+      - automake
+      - libtool
+      - m4
