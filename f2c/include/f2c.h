@@ -13,7 +13,7 @@
 #ifdef _MSC_VER
 # include <f2c_types_win.h>
 #else
-# include <f2c/f2c_types.h>
+# include <f2c_types.h>
 #endif
 
 #ifdef __cplusplus
