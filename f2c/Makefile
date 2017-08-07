@@ -136,7 +136,7 @@ install: libf2c.a libf2c.so
 	cp libf2c.a $(LIBDIR)
 	cp libf2c.so $(LIBDIR)
 	-ranlib $(LIBDIR)/libf2c.a
-	-ranlib $(LIBDIR)/libf2c.so
+	# -ranlib $(LIBDIR)/libf2c.so
 	-mkdir $(INCDIR)
 	cp f2c.h $(INCDIR)
 
