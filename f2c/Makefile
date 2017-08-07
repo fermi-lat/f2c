@@ -133,11 +133,12 @@ sysdep1.h: sysdep1.h0
 #	$(CC) -c -Donexit=on_exit -DSkip_f2c_Undefs main.c
 
 install: libf2c.a libf2c.so
+	-mkdir -p $(LIBDIR)
 	cp libf2c.a $(LIBDIR)
 	cp libf2c.so $(LIBDIR)
-	-ranlib $(LIBDIR)/libf2c.a
+	ranlib $(LIBDIR)/libf2c.a
 	# -ranlib $(LIBDIR)/libf2c.so
-	-mkdir $(INCDIR)
+	-mkdir -p $(INCDIR)
 	cp f2c.h $(INCDIR)
 
 clean:
