@@ -13,17 +13,24 @@
 # to the CFLAGS = line below.
 
 .SUFFIXES: .c .o
-CC = cc
+# CC = cc
 SHELL = /bin/sh
 CFLAGS = -O
 OS = $(shell uname)
-TARGETS = f2c.h signal1.h sysdep1.h libf2c.a
+INCTARGETS = f2c.h
+LIBTARGET = libf2c.a
 
 ifeq ($(OS), Darwin)
-	TARGETS += libf2c.dylib
+	SHAREDLIBTARGET = libf2c.dylib
 else
-	TARGETS += libf2c.so
+	SHAREDLIBTARGET = libf2c.so
 endif
+
+TARGETS = $(INCTARGETS)
+TARGETS += signal1.h sysdep1.h
+
+TARGETS += $(LIBTARGET)
+TARGETS += $(SHAREDLIBTARGET)
 
 SOFLAGS = cc -shared -dynamiclib -o libf2c.so $(OFILES)
 
@@ -134,12 +141,11 @@ sysdep1.h: sysdep1.h0
 #main.o: main.c
 #	$(CC) -c -Donexit=on_exit -DSkip_f2c_Undefs main.c
 
-install: libf2c.a libf2c.so
+install: $(TARGETS)
 	-mkdir -p $(LIBDIR)
-	cp libf2c.a $(LIBDIR)
-	cp libf2c.so $(LIBDIR)
+	cp $(LIBTARGET) $(LIBDIR)
 	ranlib $(LIBDIR)/libf2c.a
-	# -ranlib $(LIBDIR)/libf2c.so
+	cp $(SHAREDLIBTARGET) $(LIBDIR)
 	-mkdir -p $(INCDIR)
 	cp f2c.h $(INCDIR)
 
