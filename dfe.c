@@ -101,7 +101,8 @@ integer s_rdfe(cilist *a)
 	int n;
 	if(!f__init) f_init();
 	f__reading=1;
-	if(n=c_dfe(a))return(n);
+  n=c_dfe(a);
+	if(n)return(n);
 	if(f__curunit->uwrt && f__nowreading(f__curunit))
 		err(a->cierr,errno,"read start");
 	f__getn = y_getc;
@@ -123,7 +124,8 @@ integer s_wdfe(cilist *a)
 	int n;
 	if(!f__init) f_init();
 	f__reading=0;
-	if(n=c_dfe(a)) return(n);
+  n=c_dfe(a);
+	if(n)return(n);
 	if(f__curunit->uwrt != 1 && f__nowwriting(f__curunit))
 		err(a->cierr,errno,"startwrt");
 	f__putn = x_putc;

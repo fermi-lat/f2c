@@ -21,6 +21,8 @@ TARGETS = f2c.h signal1.h sysdep1.h libf2c.a
 
 ifeq ($(OS), Darwin)
 	TARGETS += libf2c.dylib
+else
+	TARGETS += libf2c.so
 endif
 
 SOFLAGS = cc -shared -dynamiclib -o libf2c.so $(OFILES)
@@ -31,7 +33,7 @@ endif
 
 # compile, then strip unnecessary symbols
 .c.o:
-	$(CC) -c -DSkip_f2c_Undefs $(CFLAGS) -fPIC $*.c
+	$(CC) -g -Wall -Werror -c -DSkip_f2c_Undefs $(CFLAGS) -fPIC $*.c
 #	ld -r -x -o $*.xxx $*.o
 #	mv $*.xxx $*.o
 ## Under Solaris (and other systems that do not understand ld -x),
@@ -142,7 +144,7 @@ install: libf2c.a libf2c.so
 	cp f2c.h $(INCDIR)
 
 clean:
-	rm -f libf2c.a libf2c.so *.o arith.h signal1.h sysdep1.h
+	rm -f libf2c.a libf2c.dylib libf2c.so *.o arith.h signal1.h sysdep1.h
 
 distclean: clean
 

@@ -106,7 +106,7 @@ flag f__lquit;
 int f__lcount,f__ltype,nml_read;
 char *f__lchar;
 double f__lx,f__ly;
-#define ERR(x) if(n=(x)) return(n)
+#define ERR(x) if((n=(x))){ return(n); }
 #define GETC(x) (x=(*l_getc)())
 #define Ungetc(x,y) (*l_ungetc)(x,y)
 
@@ -291,11 +291,12 @@ l_C(Void)
 			f__lquit = 2;
 			return 0;
 			}
-		if (rd_count(ch))
+		if (rd_count(ch)){
 			if(!f__cf || !feof(f__cf))
 				errfl(f__elist->cierr,112,"complex format");
 			else
 				err(f__elist->cierr,(EOF),"lread");
+    }
 		if(GETC(ch)!='*')
 		{
 			if(!f__cf || !feof(f__cf))
@@ -314,8 +315,8 @@ l_C(Void)
 	Ungetc(ch,f__cf);
 	nml_save = nml_read;
 	nml_read = 0;
-	if (ch = l_R(1,0))
-		return ch;
+  ch = l_R(1,0);
+	if (ch) return ch;
 	if (!f__ltype)
 		errfl(f__elist->cierr,112,"no real part");
 	lz = f__lx;
@@ -326,7 +327,8 @@ l_C(Void)
 	}
 	while(iswhit(GETC(ch)));
 	(void) Ungetc(ch,f__cf);
-	if (ch = l_R(1,0))
+  ch = l_R(1,0);
+	if (ch)
 		return ch;
 	if (!f__ltype)
 		errfl(f__elist->cierr,112,"no imaginary part");
@@ -352,8 +354,8 @@ l_C(Void)
  static int
 nmL_getc(Void)
 {
-	int rv;
-	if (rv = *nmL_next++)
+	int rv = *nmL_next++;
+	if (rv)
 		return rv;
 	l_getc = nmL_getc_save;
 	l_ungetc = nmL_ungetc_save;
@@ -367,7 +369,7 @@ nmL_ungetc(x, f) int x; FILE *f;
 nmL_ungetc(int x, FILE *f)
 #endif
 {
-	f = f;	/* banish non-use warning */
+	/* f = f;	/1* banish non-use warning *1/ */
 	return *--nmL_next = x;
 	}
 
@@ -435,11 +437,13 @@ l_L(Void)
 	if(isdigit(ch))
 	{
 		rd_count(ch);
-		if(GETC(ch)!='*')
+		if(GETC(ch)!='*') 
+    {
 			if(!f__cf || !feof(f__cf))
 				errfl(f__elist->cierr,112,"no star");
 			else
 				err(f__elist->cierr,(EOF),"lread");
+    }
 		GETC(ch);
 	}
 	sawdot = 0;
@@ -787,7 +791,8 @@ integer s_rsle(cilist *a)
 	f__reading=1;
 	f__external=1;
 	f__formatted=1;
-	if(n=c_le(a)) return(n);
+  n=c_le(a);
+	if(n) return(n);
 	f__lioproc = l_read;
 	f__lquit = 0;
 	f__lcount = 0;
