@@ -17,7 +17,7 @@ CC = cc
 SHELL = /bin/sh
 CFLAGS = -O
 OS = $(shell uname)
-TARGETS = f2c.h signal1.h sysdep1.h libf2c.a libf2c.so 
+TARGETS = f2c.h signal1.h sysdep1.h libf2c.a
 
 ifeq ($(OS), Darwin)
 	TARGETS += libf2c.dylib
