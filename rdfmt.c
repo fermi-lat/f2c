@@ -90,7 +90,7 @@ rd_Z(Uint *n, int w, ftnlen len)
 		t += i;
 		}
 	do {
-		*t = (hex[*s0 & 0xff]-1) << 4 | hex[s0[1] & 0xff]-1;
+		*t = (hex[*s0 & 0xff]-1) << 4 | (hex[s0[1] & 0xff]-1);
 		t += i;
 		s0 += 2;
 		}

@@ -286,7 +286,7 @@ fk_open(int seq, int fmt, ftnint n)
 #endif
 {	char nbuf[10];
 	olist a;
-	(void) sprintf(nbuf,"fort.%ld",(long)n);
+	(void) sprintf(nbuf,"fort.%d",n);
 	a.oerr=1;
 	a.ounit=n;
 	a.ofnm=nbuf;
