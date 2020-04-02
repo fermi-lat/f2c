@@ -32,7 +32,7 @@ TARGETS += signal1.h sysdep1.h
 TARGETS += $(LIBTARGET)
 TARGETS += $(SHAREDLIBTARGET)
 
-SOFLAGS = cc -shared -dynamiclib -o libf2c.so $(OFILES)
+SOFLAGS = $(CC) -shared -dynamiclib -o libf2c.so $(OFILES)
 
 ifeq ($(OS), Darwin)
 	SOFLAGS += -install_name @rpath/libf2c.so
@@ -93,20 +93,20 @@ OFILES = $(MISC) $(POW) $(CX) $(DCX) $(REAL) $(DBL) $(INT) \
 all: $(TARGETS)
 
 libf2c.a: $(OFILES)
-	ar r libf2c.a $?
-	-ranlib libf2c.a
+	-$(AR) r libf2c.a $?
+	-$(RANLIB) libf2c.a
 
 ## Shared-library variant: the following rule works on Linux
 ## systems.  Details are system-dependent.  Under Linux, -fPIC
 ## must appear in the CFLAGS assignment when making libf2c.so.
 ## Under Solaris, use -Kpic in CFLAGS and use "ld -G" instead
-## of "cc -shared".
+## of "$(CC) -shared".
 
 libf2c.so: $(OFILES)
 	$(SOFLAGS)
 
 libf2c.dylib: $(OFILES)
-	cc -dynamiclib -o libf2c.dylib $(OFILES) -install_name @rpath/libf2c.dylib
+	$(CC) -dynamiclib -o libf2c.dylib $(OFILES) -install_name @rpath/libf2c.dylib
 
 ### If your system lacks ranlib, you don't need it; see README.
 
@@ -144,7 +144,7 @@ sysdep1.h: sysdep1.h0
 install: $(TARGETS)
 	-mkdir -p $(LIBDIR)
 	cp $(LIBTARGET) $(LIBDIR)
-	ranlib $(LIBDIR)/libf2c.a
+	$(RANLIB) $(LIBDIR)/libf2c.a
 	cp $(SHAREDLIBTARGET) $(LIBDIR)
 	-mkdir -p $(INCDIR)
 	cp f2c.h $(INCDIR)
